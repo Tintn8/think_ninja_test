@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -57,7 +59,6 @@ class Items extends StatelessWidget {
                     return const CircularProgressIndicator();
                   }
 
-                  // Display the list of items
                   return ListView(
                     children:
                         snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -69,6 +70,7 @@ class Items extends StatelessWidget {
                         },
                         child: ListTile(
                           title: Text(data['description']),
+                          // ignore: prefer_interpolation_to_compose_strings
                           subtitle: Text('R' + data['price']),
                         ),
                       );
@@ -87,20 +89,19 @@ class Items extends StatelessWidget {
     try {
       String description = _descriptionController.text;
       String price = _priceController.text;
-      int code = await getCount(); // Wait for the getCount result
+      int code = await getCount();
       await itemsCollection.add({
         'description': description,
         'price': price,
-        'code': code.toString(), // Convert the code to a string
+        'code': code.toString(),
       });
     } catch (e) {
-      print('Error adding item: $e');
+      // print('Error adding item: $e');
     }
   }
 
   Future<int> getCount() async {
     try {
-      // Replace 'your_collection_name' with the actual name of your collection
       CollectionReference collectionRef =
           FirebaseFirestore.instance.collection('items');
 
@@ -110,7 +111,7 @@ class Items extends StatelessWidget {
 
       return documentCount;
     } catch (e) {
-      print('Error: $e');
+      // print('Error: $e');
       return 0;
     }
   }

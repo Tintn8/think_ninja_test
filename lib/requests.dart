@@ -1,6 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// ignore: camel_case_types
 class request extends StatefulWidget {
   const request({super.key});
 
@@ -8,6 +11,7 @@ class request extends StatefulWidget {
   _requestState createState() => _requestState();
 }
 
+// ignore: camel_case_types
 class _requestState extends State<request> {
   final TextEditingController tableNumberController = TextEditingController();
   final TextEditingController requestController = TextEditingController();
@@ -52,7 +56,7 @@ class _requestState extends State<request> {
       orderItems.clear();
     });
 
-    print('ListView items sent to Firestore!');
+    // print('ListView items sent to Firestore!');
   }
 
   @override
@@ -83,7 +87,7 @@ class _requestState extends State<request> {
               }).toList(),
               onChanged: (value) {
                 // Handle menu item selection
-                print('Selected Menu Item: $value');
+                // print('Selected Menu Item: $value');
               },
               decoration: const InputDecoration(labelText: 'Select Menu Item'),
             ),

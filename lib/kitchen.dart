@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -10,19 +12,20 @@ class KitchenPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Kitchen'),
       ),
-      body: const kitchenList(),
+      body: const kitchen_List(),
     );
   }
 }
 
-class kitchenList extends StatefulWidget {
-  const kitchenList({super.key});
+// ignore: camel_case_types
+class kitchen_List extends StatefulWidget {
+  const kitchen_List({super.key});
 
   @override
   _kitchenListState createState() => _kitchenListState();
 }
 
-class _kitchenListState extends State<kitchenList> {
+class _kitchenListState extends State<kitchen_List> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
