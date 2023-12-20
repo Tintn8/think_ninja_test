@@ -1,10 +1,9 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+// ignore: must_be_immutable
 class Items extends StatelessWidget {
   final CollectionReference itemsCollection =
       FirebaseFirestore.instance.collection('items');
@@ -44,6 +43,8 @@ class Items extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 addItem();
+                _descriptionController.clear();
+                _priceController.clear();
               },
               child: const Text('Add Item'),
             ),

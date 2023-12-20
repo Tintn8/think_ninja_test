@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // ignore: camel_case_types
-class request extends StatefulWidget {
-  const request({super.key});
+class preOrder extends StatefulWidget {
+  const preOrder({super.key});
 
   @override
-  _requestState createState() => _requestState();
+  _preOrderState createState() => _preOrderState();
 }
 
 // ignore: camel_case_types
-class _requestState extends State<request> {
+class _preOrderState extends State<preOrder> {
   final TextEditingController tableNumberController = TextEditingController();
   final TextEditingController requestController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
@@ -44,7 +44,7 @@ class _requestState extends State<request> {
         FirebaseFirestore.instance.collection('requests');
     for (OrderItem orderItem in orderItems) {
       await orders.add({
-        'tableNumber': orderItem.tableNumber,
+        'tableNumber': 'Pre-Order',
         'menuItem': orderItem.menuItem,
         'specialRequest': orderItem.specialRequest,
         'quantity': orderItem.quantity,
@@ -64,17 +64,13 @@ class _requestState extends State<request> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Requests'),
+        title: const Text('Pre-Order'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Table Number TextField
-            TextField(
-              controller: tableNumberController,
-              decoration: const InputDecoration(labelText: 'Table Number'),
-            ),
 
             // Menu Dropdown
             DropdownButtonFormField<String>(
@@ -163,7 +159,7 @@ class _requestState extends State<request> {
                 tableNumberController.clear();
                 requestController.clear();
               },
-              child: const Text('Add Requests '),
+              child: const Text('Place Order '),
             ),
           ],
         ),
@@ -174,7 +170,7 @@ class _requestState extends State<request> {
 
 void main() {
   runApp(const MaterialApp(
-    home: request(),
+    home: preOrder(),
   ));
 }
 

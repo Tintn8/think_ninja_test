@@ -17,7 +17,6 @@ class KitchenPage extends StatelessWidget {
   }
 }
 
-// ignore: camel_case_types
 class kitchen_List extends StatefulWidget {
   const kitchen_List({super.key});
 
@@ -49,7 +48,7 @@ class _kitchenListState extends State<kitchen_List> {
             String specialRequest = data['specialRequest'];
             String status = data['status'];
 
-            // Add a condition to check if the status is "In Progress"
+            //   condition to check if the status is "In Progress"
             if (status == 'In Progress') {
               return Card(
                 child: ListTile(

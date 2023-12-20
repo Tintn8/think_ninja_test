@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import the cloud_firestore package
 import 'package:think_ninja_test/awaiting.dart';
 import 'package:think_ninja_test/items.dart';
 import 'package:think_ninja_test/orders.dart';
+import 'package:think_ninja_test/preorder.dart';
 import 'package:think_ninja_test/requests.dart';
 import 'package:think_ninja_test/kitchen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +18,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // ignore: use_key_in_widget_constructors
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  // ignore: use_key_in_widget_constructors
+  const MyHomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +39,43 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Welcome, Please use the sidebar to navigate'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Welcome, Please use the sidebar to navigate'),
+            const SizedBox(height: 40),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('Orders')
+                  .where('status', isEqualTo: 'Waiting for Collection')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
+
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+
+                int ordersCount = snapshot.data!.docs.length;
+                return Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Number of Orders:'),
+                        Text('$ordersCount'), // Display the orders count
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       drawer: const MyDrawer(),
     );
@@ -116,6 +155,17 @@ class MyDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => Items()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.food_bank),
+            title: const Text('Pre Order ( Coming Soon)'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const preOrder()),
               );
             },
           ),
